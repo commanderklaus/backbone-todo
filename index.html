@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Backbone.js Todos</title>
+  <style>
+  .complete {
+   color: #bbb;
+   text-decoration: line-through;
+  }
+
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <header>
+    <h1>To Do List</h1>
+    </header>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script src="underscore-min.js"></script>
+  <script src="backbone.js"></script>
+  <script src="todos.js"></script>
+  <script src="TodoItem.js"></script>
+  <script src="TodoList.js"></script>
+  <script src="TodoView.js"></script>
+  <script src="TodoListView.js"></script>
+  <script>
+
+  var TodoApp = new (Backbone.Router.extend({
+    routes: { 
+      "": "index", 
+      "todos/:id": "show" 
+    },
+
+    initialize: function () {
+      this.todoList = new TodoList();
+      this.todoList.reset(todos);
+      this.todosView = new TodoListView({collection: this.todoList});
+
+      $('#app').append(this.todosView.render().el);
+    },
+
+    index: function(){
+      this.todoList.reset(todos);
+    },
+
+    start: function(){
+      Backbone.history.start({pushState: true});
+    },
+
+    show: function(id){
+      this.todoList.focusOnTodoItemModel(id);
+    }
+  }));
+
+  $(function(){ TodoApp.start() })
+
+  </script>
+  </body>
+</html>
