@@ -33,32 +33,32 @@
 
   var TodoApp = new (Backbone.Router.extend({
     routes: { 
-      "": "index", 
+      "":          "index", 
       "todos/:id": "show" 
     },
 
     initialize: function () {
       this.todoList = new TodoList();
       this.todoList.reset(todos);
-      this.todosView = new TodoListView({collection: this.todoList});
+      this.todosView = new TodoListView({ collection: this.todoList });
 
       $('#app').append(this.todosView.render().el);
     },
 
-    index: function(){
+    index: function () {
       this.todoList.reset(todos);
     },
 
-    start: function(){
-      Backbone.history.start({pushState: true});
+    start: function () {
+      Backbone.history.start({ pushState: true });
     },
 
-    show: function(id){
-      this.todoList.focusOnTodoItemModel(id);
+    show: function (id) {
+      this.todoList.focusOnTodoItem(id);
     }
   }));
 
-  $(function(){ TodoApp.start() })
+  $(function(){ TodoApp.start() });
 
   </script>
   </body>

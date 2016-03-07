@@ -13,7 +13,7 @@
     template: _.template('<h3 class="<%= status %>">' + 
       '<input type="checkbox" ' +
       '<% if(status === "complete") print("checked") %>/>' +
-      '<%= description %></h3>'),
+      '<%= description %> <a href="#todos/<%= id %>">☞</a></h3>'),
 
     toggleStatus: function (e) {
       this.model.toggleStatus();
@@ -24,12 +24,9 @@
       // re-render the view if the model changes
       this.model.on('change', this.render, this);
 
-      // remove view on model destroy
-      this.model.on('destroy', this.remove, this);
-
-      this.model.on('hide', this.remove, this);
+      // remove view on model destroy and hide
+      this.model.on('destroy hide', this.remove, this);
     },
-
 
     remove: function () {
       this.$el.remove();
@@ -42,5 +39,4 @@
       this.$el.html(this.template(attributes));
       return this; // to allow chaining
     }
-
   }); 
